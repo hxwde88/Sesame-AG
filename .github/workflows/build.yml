@@ -8,6 +8,10 @@ on:
         required: true
         default: ''
 
+# 关键：赋予仓库读写权限，允许工作流创建 Release
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
