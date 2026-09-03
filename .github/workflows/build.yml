@@ -8,7 +8,6 @@ on:
         required: true
         default: ''
 
-# 关键：赋予仓库读写权限，允许工作流创建 Release
 permissions:
   contents: write
 
@@ -53,7 +52,8 @@ jobs:
         with:
           tag_name: my-build-${{ github.event.inputs.upstream_tag }}
           name: 自动构建上游版本 ${{ github.event.inputs.upstream_tag }}
-          files: ${{ steps.sign_app.outputs.signedFiles }}
+          # 关键修改：直接抓取 release 目录下所有签名好的 .apk 安装包
+          files: app/build/outputs/apk/release/*-signed.apk
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
